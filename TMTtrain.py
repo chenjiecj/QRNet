@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     Init_Epoch = 0
     Freeze_Epoch = 0
-    UnFreeze_Epoch = 13
+    UnFreeze_Epoch = 520
     ratio             = 0.38461538
     Unfreeze_batch_sizeYOLO = 32
     Freeze_batch_sizeYOLO = 32
