@@ -154,11 +154,16 @@ class DFL(nn.Module):
 #   yolo_body
 #---------------------------------------------------#
 class YoloBody(nn.Module):
-    def __init__(self, backbone, num_classes,  pretrained=False):
+    def __init__(self, backbone, num_classes, rate="n" pretrained=False):
         super(YoloBody, self).__init__()
-
-        base_channels = 16
-        base_depth = 1
+        if rate == "n":
+            k  = 1 
+            base_channels = 16
+            base_depth = 1
+        else:
+            k  = 4 
+            base_channels = 64
+            base_depth = 3
 
         if backbone == "mobilenet":
             self.backbone = MobileNetV1()
@@ -175,20 +180,20 @@ class YoloBody(nn.Module):
 
         self.input_proj1=(
             nn.Sequential(
-                nn.Conv2d(input_dim[0], 64, kernel_size=1, bias=False),
-                nn.BatchNorm2d(64),
+                nn.Conv2d(input_dim[0], 64*k, kernel_size=1, bias=False),
+                nn.BatchNorm2d(64*k),
             )
         )
         self.input_proj2=(
             nn.Sequential(
-                nn.Conv2d(input_dim[1], 128, kernel_size=1, bias=False),
-                nn.BatchNorm2d(128),
+                nn.Conv2d(input_dim[1], 128*k, kernel_size=1, bias=False),
+                nn.BatchNorm2d(128*k),
             )
         )
         self.input_proj3=(
             nn.Sequential(
-                nn.Conv2d(input_dim[2], 256, kernel_size=1, bias=False),
-                nn.BatchNorm2d(256),
+                nn.Conv2d(input_dim[2], 256*k, kernel_size=1, bias=False),
+                nn.BatchNorm2d(256*k),
             )
         )
 
